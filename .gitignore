@@ -22,6 +22,7 @@ tests/**/obj/
 
 # Local configuration with secrets
 config.json
+config2.json
 
 # User-specific files
 *.user

@@ -36,7 +36,7 @@ public static class SqlIntegrationTestSettings
     ///     For security, the actual password should be stored in environment variable IMOS_SQL_PASSWORD.
     ///     This constant holds the placeholder pattern for documentation purposes only.
     /// </remarks>
-    public const string SqlAuthPasswordPlaceholder = "imos"; // Replace with env var in production: Environment.GetEnvironmentVariable("IMOS_SQL_PASSWORD") ?? "imos"
+    public const string SqlAuthPasswordPlaceholder = "TEST_PASSWORD_PLACEHOLDER"; // Replace with env var in production: Environment.GetEnvironmentVariable("IMOS_SQL_PASSWORD") ?? "TEST_PASSWORD_PLACEHOLDER"
 
     /// <summary>
     ///     Gets the default connection info for integration tests using Windows Authentication.
