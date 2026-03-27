@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/imos.PriceUpdater/imos.PriceUpdater.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/imos.PriceUpdater.Tests/imos.PriceUpdater.Tests.csproj" />
+  </Folder>
+</Solution>

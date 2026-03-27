@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [ develop, main ]
+  pull_request:
+    branches: [ develop, main ]
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  SOLUTION_DIR: ${{ github.workspace }}
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: ${{ env.SOLUTION_DIR }}
+
+      - name: Build solution
+        run: dotnet build --no-restore --configuration Release
+        working-directory: ${{ env.SOLUTION_DIR }}
+
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage"
+        working-directory: ${{ env.SOLUTION_DIR }}
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ${{ github.workspace }}/**/coverage.cobertura.xml
+
+  quality:
+    name: Code Quality
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: ${{ env.SOLUTION_DIR }}
+
+      - name: Check formatting
+        run: dotnet format --verify-no-changes --severity warn
+        working-directory: ${{ env.SOLUTION_DIR }}

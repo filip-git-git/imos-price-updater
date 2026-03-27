@@ -1,0 +1,162 @@
+<UserControl x:Class="IMOS.PriceUpdater.Views.HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Execution History" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="Refresh" Command="{Binding RefreshCommand}" Margin="20,0,0,0" Padding="10,3"/>
+            <Button Content="Export Report" Command="{Binding ExportReportCommand}" Margin="5,0,0,0" Padding="10,3"/>
+        </StackPanel>
+
+        <!-- Filter Bar -->
+        <Grid Grid.Row="1" Margin="5,0,5,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="From:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <DatePicker Grid.Column="1" SelectedDate="{Binding FromDate}" VerticalAlignment="Center"/>
+
+            <TextBlock Grid.Column="2" Text="To:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <DatePicker Grid.Column="3" SelectedDate="{Binding ToDate}" VerticalAlignment="Center"/>
+
+            <TextBlock Grid.Column="4" Text="Outcome:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <ComboBox Grid.Column="5" SelectedValue="{Binding OutcomeFilter}" VerticalAlignment="Center">
+                <ComboBoxItem Content="All" IsSelected="True"/>
+                <ComboBoxItem Content="Completed"/>
+                <ComboBoxItem Content="Failed"/>
+                <ComboBoxItem Content="Cancelled"/>
+            </ComboBox>
+
+            <Button Grid.Column="7" Content="Clear Filters" Command="{Binding ClearFiltersCommand}" 
+                    Padding="10,3" Margin="5,0"/>
+        </Grid>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="2" Margin="5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- History List -->
+            <DataGrid Grid.Column="0" 
+                      ItemsSource="{Binding HistoryView}" 
+                      SelectedItem="{Binding SelectedHistory}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      CanUserSortColumns="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date/Time" Binding="{Binding ExecutedAt, StringFormat='yyyy-MM-dd HH:mm:ss'}" Width="140"/>
+                    <DataGridTextColumn Header="CSV File" Binding="{Binding CsvFileName}" Width="*"/>
+                    <DataGridTextColumn Header="Outcome" Binding="{Binding Outcome}" Width="80"/>
+                    <DataGridTextColumn Header="Total" Binding="{Binding TotalRows}" Width="60"/>
+                    <DataGridTextColumn Header="Updated" Binding="{Binding UpdatedCount}" Width="70"/>
+                    <DataGridTextColumn Header="Errors" Binding="{Binding ErrorCount}" Width="60"/>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding DurationSeconds, StringFormat='{}{0:F1}s'}" Width="70"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="Transparent"/>
+
+            <!-- Details Panel -->
+            <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1" Padding="10">
+                <StackPanel>
+                    <TextBlock Text="Execution Details" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                    <StackPanel Visibility="{Binding SelectedHistory, Converter={StaticResource NullToVisibilityConverter}}">
+                        <TextBlock Text="{Binding SelectedHistory.CsvFileName}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding SelectedHistory.ExecutedAt, StringFormat='Executed: {0:yyyy-MM-dd HH:mm:ss}'}" 
+                                   Margin="0,5,0,0"/>
+
+                        <Separator Margin="0,10"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Total Rows:"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelectedHistory.TotalRows}" FontWeight="Bold"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Updated:" Foreground="Green"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SelectedHistory.UpdatedCount}" 
+                                       FontWeight="Bold" Foreground="Green"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Skipped:" Foreground="Orange"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SelectedHistory.SkippedCount}" 
+                                       FontWeight="Bold" Foreground="Orange"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Errors:" Foreground="Red"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding SelectedHistory.ErrorCount}" 
+                                       FontWeight="Bold" Foreground="Red"/>
+                        </Grid>
+
+                        <Separator Margin="0,10"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Re-run" Command="{Binding ReRunCommand}" 
+                                    Padding="15,5" Margin="0,0,5,0"/>
+                            <Button Content="Delete" Command="{Binding DeleteCommand}" 
+                                    Padding="15,5"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <TextBlock Text="Select an entry to view details" 
+                               Visibility="{Binding SelectedHistory, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=Inverse}"
+                               Foreground="Gray"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="0,50,0,0"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="3">
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusMessage}"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock Text="{Binding HistoryItems.Count, StringFormat='{}{0} entries'}"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- Loading Overlay -->
+        <Grid Grid.Row="0" Grid.RowSpan="4" 
+              Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+              Background="#80000000">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Loading..." FontSize="16" Foreground="White"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

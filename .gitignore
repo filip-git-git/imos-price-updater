@@ -1,0 +1,44 @@
+# AIWG Framework
+.aiwg/
+
+# OpenCode Platform
+.opencode/
+
+# AI Agent Configuration
+AGENTS.md
+
+# Git
+.git/
+
+# Build Results
+src/**/bin/
+src/**/obj/
+tests/**/bin/
+tests/**/obj/
+
+# Environment files (contain secrets) - LEGACY
+# .env
+# src/**/*.env
+
+# Local configuration with secrets
+config.json
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+*.nupkg
+packages/
+
+# IDE
+.vs/
+.vscode/
+*.swp
+*~
+
+# Test Results
+TestResults/
+coverage.opencover.xml

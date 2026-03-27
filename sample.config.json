@@ -1,0 +1,18 @@
+{
+  "SqlConnection": {
+    "Server": "(local)\\IMOSSQL2022",
+    "Database": "Testy_iX23",
+    "AuthenticationMode": "SqlAuthentication",
+    "Username": "IMOSADMIN",
+    "Password": ""
+  },
+  "ColumnMapping": {
+    "SqlTable": "MAT",
+    "CsvSearchColumn": "Purchase Item ID",
+    "CsvPriceColumn": "assigned price",
+    "SqlSearchColumn": "BESTELLUNG",
+    "SqlPriceColumn": "COST"
+  },
+  "BatchSize": 1000,
+  "CommandTimeout": 30
+}
