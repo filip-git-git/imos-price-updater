@@ -8,8 +8,6 @@ Desktop application for bulk updating material prices in IMOS CAD database from 
 - Visual column mapping (no SQL knowledge required)
 - Batch processing for large files (5000+ rows)
 - Transaction support with rollback on failure
-- History of past updates
-- Configuration backup/restore
 
 ## Requirements
 
@@ -19,7 +17,7 @@ Desktop application for bulk updating material prices in IMOS CAD database from 
 
 ## Quick Start
 
-1. Download `imosPriceUpdater-v1.0.zip` from releases
+1. Download `imosPriceUpdater-v1.0.1.zip` from releases
 2. Extract to any folder
 3. Copy `sample.config.json` and edit with your SQL settings
 4. Run `imosPriceUpdater.exe`
