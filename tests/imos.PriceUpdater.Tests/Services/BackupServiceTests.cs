@@ -16,7 +16,7 @@ public class BackupServiceTests : IDisposable
         _mockLogger = new Mock<ILogger<BackupService>>();
         _mockCsvParser = new Mock<ICsvParser>();
         _service = new BackupService(_mockLogger.Object, _mockCsvParser.Object);
-        
+
         // Use reflection to get the backup directory
         var type = typeof(BackupService);
         var field = type.GetField("_backupDirectory", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -76,7 +76,7 @@ public class BackupServiceTests : IDisposable
         Assert.Equal("test_config.json", backupInfo.SourceConfigFileName);
         Assert.False(backupInfo.IsAutoBackup);
         Assert.False(backupInfo.IsCompressed);
-        
+
         // Cleanup
         File.Delete(configPath);
     }
@@ -92,7 +92,7 @@ public class BackupServiceTests : IDisposable
 
         // Assert
         Assert.True(backupInfo.IsAutoBackup);
-        
+
         // Cleanup
         File.Delete(configPath);
     }
@@ -131,7 +131,7 @@ public class BackupServiceTests : IDisposable
 
         // Assert
         Assert.True(backups.Count >= 2);
-        
+
         // Cleanup
         File.Delete(configPath1);
         File.Delete(configPath2);
@@ -147,7 +147,7 @@ public class BackupServiceTests : IDisposable
         // Arrange
         var config1 = CreateTestConfigFile("config1.json");
         var config2 = CreateTestConfigFile("config2.json");
-        
+
         await _service.CreateBackupAsync(config1);
         await _service.CreateBackupAsync(config2);
 
@@ -156,7 +156,7 @@ public class BackupServiceTests : IDisposable
 
         // Assert
         Assert.All(backups, b => Assert.Equal("config1.json", b.SourceConfigFileName));
-        
+
         // Cleanup
         File.Delete(config1);
         File.Delete(config2);
@@ -180,7 +180,7 @@ public class BackupServiceTests : IDisposable
         // Assert
         var backups = await _service.GetAllBackupsAsync();
         Assert.DoesNotContain(backups, b => b.Id == backupId);
-        
+
         // Cleanup
         File.Delete(configPath);
     }
@@ -195,22 +195,24 @@ public class BackupServiceTests : IDisposable
         // Arrange
         var configPath = CreateTestConfigFile("restore_test.json");
         var backupInfo = await _service.CreateBackupAsync(configPath);
-        
+
         // Ensure target directory exists
         var targetDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "imosPriceUpdater", "configs");
         Directory.CreateDirectory(targetDir);
-        
+
         // Write current config
         var currentConfigPath = Path.Combine(targetDir, "restore_test.json");
         File.WriteAllText(currentConfigPath, "{}");
 
         // Act & Assert - should not throw
         await _service.RestoreBackupAsync(backupInfo.Id);
-        
+
         // Cleanup
         File.Delete(configPath);
         if (File.Exists(currentConfigPath))
+        {
             File.Delete(currentConfigPath);
+        }
     }
 
     #endregion
@@ -238,10 +240,12 @@ public class BackupServiceTests : IDisposable
 
         // Assert
         Assert.Equal(newPath, _service.GetBackupDirectory());
-        
+
         // Cleanup
         if (Directory.Exists(newPath))
+        {
             Directory.Delete(newPath);
+        }
     }
 
     #endregion

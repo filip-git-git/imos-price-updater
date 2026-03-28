@@ -62,7 +62,7 @@ public static class SqlIntegrationTestSettings
     {
         // Retrieve password from environment variable for secure storage
         var password = Environment.GetEnvironmentVariable("IMOS_SQL_PASSWORD") ?? SqlAuthPasswordPlaceholder;
-        
+
         return new SqlConnectionInfo
         {
             Server = DefaultServer,
@@ -100,6 +100,7 @@ public static class SqlIntegrationTestSettings
     /// <returns>A SQL Server connection string.</returns>
     public static string BuildConnectionString(SqlConnectionInfo connectionInfo)
     {
+        ArgumentNullException.ThrowIfNull(connectionInfo);
         return connectionInfo.BuildConnectionString();
     }
 
@@ -142,7 +143,7 @@ public static class SqlIntegrationTestSettings
     {
         // Retrieve password from environment variable for secure storage
         var password = Environment.GetEnvironmentVariable("IMOS_SQL_PASSWORD") ?? SqlAuthPasswordPlaceholder;
-        
+
         var builder = new SqlConnectionStringBuilder
         {
             DataSource = server,

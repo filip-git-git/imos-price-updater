@@ -212,7 +212,10 @@ public sealed class HistoryViewModel : ViewModelBase
     /// </summary>
     private void ApplyFilters()
     {
-        if (_historyView == null) return;
+        if (_historyView == null)
+        {
+            return;
+        }
 
         _historyView.Filter = item =>
         {
@@ -271,7 +274,10 @@ public sealed class HistoryViewModel : ViewModelBase
 
     private async Task ExecuteDeleteAsync()
     {
-        if (SelectedHistory == null) return;
+        if (SelectedHistory == null)
+        {
+            return;
+        }
 
         try
         {
@@ -328,7 +334,10 @@ public sealed class HistoryViewModel : ViewModelBase
 
     private async Task ExecuteReRunAsync()
     {
-        if (SelectedHistory == null) return;
+        if (SelectedHistory == null)
+        {
+            return;
+        }
 
         _logger.LogInformation("Re-run requested for execution {ExecutionId}", SelectedHistory.Id);
         StatusMessage = "Loading configuration for re-run...";

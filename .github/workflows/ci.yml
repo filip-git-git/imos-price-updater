@@ -9,6 +9,7 @@ on:
 env:
   DOTNET_VERSION: '8.0.x'
   SOLUTION_DIR: ${{ github.workspace }}
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
   build:

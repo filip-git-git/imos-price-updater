@@ -290,7 +290,7 @@ public class PriceUpdateServiceTests
 
         // Assert
         Assert.NotNull(summary);
-        
+
         // When validation fails, TotalRows should still be 0 (the initial summary)
         // If validation passed and CountCsvRowsAsync was called, TotalRows would be 0 from empty CSV
         // The key indicator is whether errors were added
@@ -298,7 +298,7 @@ public class PriceUpdateServiceTests
         Assert.Equal(0, summary.UpdatedCount);
         Assert.Equal(0, summary.SkippedCount);
         Assert.Equal(0, summary.ErrorCount);
-        
+
         // Errors should be added to the Errors collection when validation fails
         Assert.True(summary.Errors.Count > 0, $"Expected validation errors but Errors collection was empty. Errors: {summary.Errors.Count}");
     }

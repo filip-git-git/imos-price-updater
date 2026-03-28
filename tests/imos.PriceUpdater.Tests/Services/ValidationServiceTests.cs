@@ -237,7 +237,7 @@ public class ValidationServiceTests
     {
         // Arrange
         var filePath = CreateTestCsvFile("MaterialNo;Price\nMAT-001;100\nMAT-001;200\nMAT-002;300");
-        
+
         var rows = new List<CsvRow>
         {
             new CsvRow(2, new Dictionary<string, string> { ["MaterialNo"] = "MAT-001", ["Price"] = "100" }),

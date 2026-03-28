@@ -70,21 +70,21 @@ public sealed record CsvRecord(
         value = value.Trim();
 
         // Try direct decimal parsing first
-        if (decimal.TryParse(value, System.Globalization.NumberStyles.Any, 
+        if (decimal.TryParse(value, System.Globalization.NumberStyles.Any,
             System.Globalization.CultureInfo.InvariantCulture, out price))
         {
             return true;
         }
 
         // Try with comma as decimal separator
-        if (decimal.TryParse(value, System.Globalization.NumberStyles.Any, 
+        if (decimal.TryParse(value, System.Globalization.NumberStyles.Any,
             new System.Globalization.CultureInfo("de-DE"), out price))
         {
             return true;
         }
 
         // Try with Polish locale (comma as decimal separator)
-        if (decimal.TryParse(value, System.Globalization.NumberStyles.Any, 
+        if (decimal.TryParse(value, System.Globalization.NumberStyles.Any,
             new System.Globalization.CultureInfo("pl-PL"), out price))
         {
             return true;

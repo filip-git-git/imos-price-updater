@@ -15,7 +15,7 @@ public class HistoryServiceTests : IDisposable
     {
         _mockLogger = new Mock<ILogger<HistoryService>>();
         _service = new HistoryService(_mockLogger.Object);
-        
+
         // Use reflection to get the history directory
         var type = typeof(HistoryService);
         var field = type.GetField("_historyDirectory", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -120,7 +120,7 @@ public class HistoryServiceTests : IDisposable
         // Arrange
         var history1 = CreateTestHistory(outcome: ExecutionOutcome.Success);
         var history2 = CreateTestHistory(outcome: ExecutionOutcome.Failed);
-        
+
         await _service.SaveExecutionAsync(history1);
         await Task.Delay(10); // Ensure different timestamps
         await _service.SaveExecutionAsync(history2);
@@ -140,7 +140,7 @@ public class HistoryServiceTests : IDisposable
         // Arrange
         var successHistory = CreateTestHistory(outcome: ExecutionOutcome.Success);
         var failedHistory = CreateTestHistory(outcome: ExecutionOutcome.Failed);
-        
+
         await _service.SaveExecutionAsync(successHistory);
         await _service.SaveExecutionAsync(failedHistory);
 
@@ -158,7 +158,7 @@ public class HistoryServiceTests : IDisposable
         // Arrange
         var oldHistory = CreateTestHistory();
         oldHistory.ExecutedAt = DateTime.UtcNow.AddDays(-30);
-        
+
         var recentHistory = CreateTestHistory();
         recentHistory.ExecutedAt = DateTime.UtcNow;
 
@@ -240,7 +240,7 @@ public class HistoryServiceTests : IDisposable
         // Arrange
         var history = CreateTestHistory();
         await _service.SaveExecutionAsync(history);
-        
+
         var details = new List<ExecutionHistoryDetail>
         {
             CreateTestDetail(history.Id, "MAT-001", ExecutionStatus.Updated),
@@ -266,7 +266,7 @@ public class HistoryServiceTests : IDisposable
         // Arrange
         var history1 = CreateTestHistory();
         var history2 = CreateTestHistory();
-        
+
         await _service.SaveExecutionAsync(history1);
         await _service.SaveExecutionAsync(history2);
 

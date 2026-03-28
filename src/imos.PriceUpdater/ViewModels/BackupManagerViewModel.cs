@@ -218,7 +218,10 @@ public sealed class BackupManagerViewModel : ViewModelBase
 
     private async Task ExecuteRestoreAsync()
     {
-        if (SelectedBackup == null) return;
+        if (SelectedBackup == null)
+        {
+            return;
+        }
 
         try
         {
@@ -248,7 +251,10 @@ public sealed class BackupManagerViewModel : ViewModelBase
 
     private async Task ExecuteDeleteAsync()
     {
-        if (SelectedBackup == null) return;
+        if (SelectedBackup == null)
+        {
+            return;
+        }
 
         try
         {

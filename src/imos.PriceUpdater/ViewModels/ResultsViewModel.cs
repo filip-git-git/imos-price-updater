@@ -161,7 +161,7 @@ public sealed class ResultsViewModel : ViewModelBase
     public void LoadResults(IEnumerable<ExecutionHistoryDetail> details)
     {
         ArgumentNullException.ThrowIfNull(details);
-        
+
         Results.Clear();
         foreach (var detail in details)
         {
@@ -195,7 +195,10 @@ public sealed class ResultsViewModel : ViewModelBase
     /// </summary>
     private void ApplyFilters()
     {
-        if (_resultsView == null) return;
+        if (_resultsView == null)
+        {
+            return;
+        }
 
         _resultsView.Filter = item =>
         {

@@ -124,10 +124,10 @@ public sealed class ValidationService : IValidationService
             // Check for material ID column (any of the accepted names)
             var materialIdColumns = new[] { "MaterialNo", "Material ID", "MaterialNumber" };
             var hasMaterialIdColumn = materialIdColumns.Any(col => headerSet.Contains(col));
-            
+
             // Check for price column
             var hasPriceColumn = headerSet.Contains("Price");
-            
+
             // Both columns are required
             if (!hasMaterialIdColumn)
             {
@@ -139,7 +139,7 @@ public sealed class ValidationService : IValidationService
                     Message = $"Missing required column. Expected one of: {string.Join(", ", materialIdColumns)}"
                 });
             }
-            
+
             if (!hasPriceColumn)
             {
                 result.Errors.Add(new CsvValidationError

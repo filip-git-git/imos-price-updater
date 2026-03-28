@@ -250,7 +250,10 @@ public class MainViewModel : ViewModelBase
                 {
                     ResultSummary += $"\nRow {item.CsvLineNumber}: {item.SearchValue}";
                 }
-                if (updatedItems.Count == 10) ResultSummary += "\n... (more)";
+                if (updatedItems.Count == 10)
+                {
+                    ResultSummary += "\n... (more)";
+                }
             }
 
             var skippedItems = summary.Results.Where(r => r.Status == UpdateStatus.Skipped).Take(10).ToList();
@@ -261,7 +264,10 @@ public class MainViewModel : ViewModelBase
                 {
                     ResultSummary += $"\nRow {item.CsvLineNumber}: {item.SearchValue}";
                 }
-                if (skippedItems.Count == 10) ResultSummary += "\n... (more)";
+                if (skippedItems.Count == 10)
+                {
+                    ResultSummary += "\n... (more)";
+                }
             }
 
             var errorItems = summary.Results.Where(r => r.Status == UpdateStatus.Error).Take(10).ToList();
@@ -272,7 +278,10 @@ public class MainViewModel : ViewModelBase
                 {
                     ResultSummary += $"\nRow {item.CsvLineNumber}: {item.SearchValue} - {item.ErrorMessage}";
                 }
-                if (errorItems.Count == 10) ResultSummary += "\n... (more)";
+                if (errorItems.Count == 10)
+                {
+                    ResultSummary += "\n... (more)";
+                }
             }
         }
         catch (Exception ex)
