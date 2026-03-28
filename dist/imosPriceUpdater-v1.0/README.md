@@ -56,14 +56,6 @@ In the application:
 2. Click **"Test Connection"** to verify SQL Server access
 3. Load your CSV file and proceed with price update
 
-## Data Locations
-
-| Type | Path |
-|------|------|
-| Logs | `%LOCALAPPDATA%\imosPriceUpdater\Logs\` |
-| Backups | `%APPDATA%\imosPriceUpdater\backups\` |
-| History | `%APPDATA%\imosPriceUpdater\history\` |
-
 ## Troubleshooting
 
 - **Connection failed**: Verify SQL Server address and credentials
